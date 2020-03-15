@@ -82,3 +82,6 @@ class LcCsv(object):
         dfs = pd.concat(dfs, axis=0)
         return dfs
 
+    def __contains__(self, item):
+        return item in self.store
+
