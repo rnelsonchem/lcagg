@@ -60,3 +60,25 @@ class LcCsv(object):
 #            else:
 #                print('Skipping:', path)
 
+    def select(self, specs, data_type='signal', wl=315):
+        if isinstance(specs, str):
+            specs = [specs]
+
+        if data_type == 'signal':
+            sep = '/sig'
+        elif data_type == 'ints':
+            sep = '/int'
+        else:
+            raise ValueError("Data type isn't recognized.")
+
+        try:
+            wl = str(wl)
+        except:
+            raise ValueError("Something is wrong with your wavelength"\
+                    " selection.")
+
+        suffix = sep + wl
+        dfs = {spec:self.store[spec+suffix] for spec in specs}
+        dfs = pd.concat(dfs, axis=0)
+        return dfs
+
