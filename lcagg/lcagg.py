@@ -83,6 +83,19 @@ class LcCsv(object):
         dfs.index.set_names(['Spec', 'idx'], inplace=True)
         return dfs
 
+    def update_table(self, specs, utype='area%'):
+        # Get DFs if specs 
+        if utype == 'area%':
+            gb = specs.groupby('Spec')
+            for spec, df in gb:
+                ap = self._area_per(df)
+                specs.loc[ap.index, 'Area %'] = ap
+            
+    def _area_per(self, df):
+        tot_area = df['Area'].sum()
+        area_per = df[['Area']]*100/tot_area
+        return area_per.rename({'Area': 'Area %'}, axis=1)
+
     def close(self,):
         self.store.close()
         
