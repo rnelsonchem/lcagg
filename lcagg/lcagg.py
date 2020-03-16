@@ -78,7 +78,7 @@ class LcCsv(object):
                     " selection.")
 
         suffix = sep + wl
-        dfs = {spec:self.store[spec+suffix] for spec in specs}
+        dfs = {spec+suffix:self.store[spec+suffix] for spec in specs}
         dfs = pd.concat(dfs, axis=0)
         dfs.index.set_names(['Spec', 'idx'], inplace=True)
         return dfs
