@@ -9,7 +9,7 @@ class LcCsv(object):
     def __init__(self, h5file, ):
         self.store = pd.HDFStore(h5file)
 
-    def folder_proc(self, folder, sample_str='\d+-\d+-(\w+\d+_\d+)_'):
+    def folder_proc(self, folder, sample_str='\d+-\d+-(\w+\d+_\d+\w?)_'):
         # Pull the appropriate sample name from the full file name. This will
         # be specific to different users/data sets
         # The default finds sample names that are like `abcd####_###` 
@@ -38,7 +38,11 @@ class LcCsv(object):
             
             # Get the sample name from the larger file name
             match = srch.search(fname)
-            smpl_name = match.group(1)
+            try:
+                smpl_name = match.group(1)
+            except:
+                mssg = "There is a problem with filename: "
+                raise ValueError(mssg + fname)
 
             # Find the wavelength value from the first line of the file
             with open(fpath, encoding='UTF16') as f:
