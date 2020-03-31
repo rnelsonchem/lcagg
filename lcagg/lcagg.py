@@ -5,6 +5,8 @@ import re
 import numpy as np 
 import pandas as pd
 
+print('new loaded')
+
 class LcCsv(object):
     def __init__(self, h5file, ):
         self.store = pd.HDFStore(h5file)
